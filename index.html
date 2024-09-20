@@ -26,37 +26,43 @@
             <p id="connection-status">Ожидание выбора роли...</p>
         </div>
 
-        <div id="host-section" class="connection-section hidden">
-            <button id="create-offer" disabled>Создать Предложение (Offer)</button>
-            <textarea id="offer" placeholder="Offer будет здесь..." readonly></textarea>
-            <button id="copy-offer" disabled>Скопировать Offer</button>
-            <textarea id="remote-answer" placeholder="Вставьте Answer от гостя здесь..." disabled></textarea>
-            <button id="set-answer" disabled>Установить Answer</button>
+        <!-- Кнопка для сворачивания/разворачивания настроек -->
+        <button id="settings-toggle">Скрыть настройки</button>
 
-            <h3>ICE Кандидаты Хоста</h3>
-            <textarea id="host-ice" placeholder="ICE кандидаты хоста будут здесь..." readonly></textarea>
-            <button id="copy-host-ice" disabled>Скопировать ICE хоста</button>
-            <textarea id="remote-host-ice" placeholder="Вставьте ICE кандидаты от гостя здесь..." disabled></textarea>
-            <button id="add-host-ice" disabled>Добавить ICE кандидата от гостя</button>
-        </div>
-
-        <div id="client-section" class="connection-section hidden">
-            <textarea id="remote-offer" placeholder="Вставьте Offer от хоста здесь..." disabled></textarea>
-            <button id="set-offer" disabled>Установить Offer и Создать Answer</button>
-            <textarea id="answer" placeholder="Answer будет здесь..." readonly></textarea>
-            <button id="copy-answer" disabled>Скопировать Answer</button>
-
-            <h3>ICE Кандидаты Гостя</h3>
-            <textarea id="client-ice" placeholder="ICE кандидаты гостя будут здесь..." readonly></textarea>
-            <button id="copy-client-ice" disabled>Скопировать ICE гостя</button>
-            <textarea id="remote-client-ice" placeholder="Вставьте ICE кандидаты от хоста здесь..." disabled></textarea>
-            <button id="add-client-ice" disabled>Добавить ICE кандидата от хоста</button>
+        <!-- Секция с настройками подключения -->
+        <div id="settings-section">
+            <div id="host-section" class="connection-section hidden">
+                <button id="create-offer" disabled>Создать Предложение (Offer)</button>
+                <textarea id="offer" placeholder="Offer будет здесь..." readonly></textarea>
+                <button id="copy-offer" disabled>Скопировать Offer</button>
+                <textarea id="remote-answer" placeholder="Вставьте Answer от гостя здесь..." disabled></textarea>
+                <button id="set-answer" disabled>Установить Answer</button>
+    
+                <h3>ICE Кандидаты Хоста</h3>
+                <textarea id="host-ice" placeholder="ICE кандидаты хоста будут здесь..." readonly></textarea>
+                <button id="copy-host-ice" disabled>Скопировать ICE хоста</button>
+                <textarea id="remote-host-ice" placeholder="Вставьте ICE кандидаты от гостя здесь..." disabled></textarea>
+                <button id="add-host-ice" disabled>Добавить ICE кандидата от гостя</button>
+            </div>
+    
+            <div id="client-section" class="connection-section hidden">
+                <textarea id="remote-offer" placeholder="Вставьте Offer от хоста здесь..." disabled></textarea>
+                <button id="set-offer" disabled>Установить Offer и Создать Answer</button>
+                <textarea id="answer" placeholder="Answer будет здесь..." readonly></textarea>
+                <button id="copy-answer" disabled>Скопировать Answer</button>
+    
+                <h3>ICE Кандидаты Гостя</h3>
+                <textarea id="client-ice" placeholder="ICE кандидаты гостя будут здесь..." readonly></textarea>
+                <button id="copy-client-ice" disabled>Скопировать ICE гостя</button>
+                <textarea id="remote-client-ice" placeholder="Вставьте ICE кандидаты от хоста здесь..." disabled></textarea>
+                <button id="add-client-ice" disabled>Добавить ICE кандидата от хоста</button>
+            </div>
         </div>
 
         <!-- Поле для игры -->
         <canvas id="gameCanvas" class="hidden"></canvas>
 
     </div>
-    <script type="module" src="game.js"></script>
+    <script type="module" src="app.js"></script>
 </body>
 </html>
