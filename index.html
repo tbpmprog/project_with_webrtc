@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>webRTC тестирование</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>webRTC тестирование</h1>
+
+        <!-- Переключатель Ролей -->
+        <div id="role-selection">
+            <label>
+                <input type="radio" name="role" value="host" id="host-role">
+                Хост
+            </label>
+            <label>
+                <input type="radio" name="role" value="client" id="client-role">
+                Гость
+            </label>
+        </div>
+
+        <!-- Секция статуса подключения -->
+        <div id="status-section">
+            <h2>Статус подключения</h2>
+            <p id="connection-status">Ожидание выбора роли...</p>
+        </div>
+        
+        <!-- Секция для Хоста -->
+        <div id="host-section" class="connection-section hidden">
+            <h2>Хост</h2>
+            <button id="create-offer" disabled>Создать Предложение (Offer)</button>
+            <textarea id="offer" placeholder="Offer будет здесь..." readonly></textarea>
+            <button id="copy-offer" disabled>Скопировать Offer</button>
+            <textarea id="remote-answer" placeholder="Вставьте Answer от гостя здесь..." disabled></textarea>
+            <button id="set-answer" disabled>Установить Answer</button>
+
+            <h3>ICE Кандидаты Хоста</h3>
+            <textarea id="host-ice" placeholder="ICE кандидаты хоста будут здесь..." readonly></textarea>
+            <button id="copy-host-ice" disabled>Скопировать ICE хоста</button>
+            <textarea id="remote-host-ice" placeholder="Вставьте ICE кандидаты от гостя здесь..." disabled></textarea>
+            <button id="add-host-ice" disabled>Добавить ICE кандидата от гостя</button>
+        </div>
+        
+        <!-- Секция для Гостя -->
+        <div id="client-section" class="connection-section hidden">
+            <h2>Гость</h2>
+            <textarea id="remote-offer" placeholder="Вставьте Offer от хоста здесь..." disabled></textarea>
+            <button id="set-offer" disabled>Установить Offer и Создать Answer</button>
+            <textarea id="answer" placeholder="Answer будет здесь..." readonly></textarea>
+            <button id="copy-answer" disabled>Скопировать Answer</button>
+
+            <h3>ICE Кандидаты Гостя</h3>
+            <textarea id="client-ice" placeholder="ICE кандидаты гостя будут здесь..." readonly></textarea>
+            <button id="copy-client-ice" disabled>Скопировать ICE гостя</button>
+            <textarea id="remote-client-ice" placeholder="Вставьте ICE кандидаты от хоста здесь..." disabled></textarea>
+            <button id="add-client-ice" disabled>Добавить ICE кандидата от хоста</button>
+        </div>
+    </div>
+    <script type="module" src="app.js"></script>
+</body>
+</html>
