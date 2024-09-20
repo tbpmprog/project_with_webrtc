@@ -2,14 +2,14 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <title>webRTC тестирование</title>
+    <title>Танковая битва</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>webRTC тестирование</h1>
+        <h1>Танковая битва</h1>
 
-        <!-- Переключатель Ролей -->
+        <!-- Экран подключения WebRTC -->
         <div id="role-selection">
             <label>
                 <input type="radio" name="role" value="host" id="host-role">
@@ -21,15 +21,12 @@
             </label>
         </div>
 
-        <!-- Секция статуса подключения -->
         <div id="status-section">
             <h2>Статус подключения</h2>
             <p id="connection-status">Ожидание выбора роли...</p>
         </div>
-        
-        <!-- Секция для Хоста -->
+
         <div id="host-section" class="connection-section hidden">
-            <h2>Хост</h2>
             <button id="create-offer" disabled>Создать Предложение (Offer)</button>
             <textarea id="offer" placeholder="Offer будет здесь..." readonly></textarea>
             <button id="copy-offer" disabled>Скопировать Offer</button>
@@ -42,10 +39,8 @@
             <textarea id="remote-host-ice" placeholder="Вставьте ICE кандидаты от гостя здесь..." disabled></textarea>
             <button id="add-host-ice" disabled>Добавить ICE кандидата от гостя</button>
         </div>
-        
-        <!-- Секция для Гостя -->
+
         <div id="client-section" class="connection-section hidden">
-            <h2>Гость</h2>
             <textarea id="remote-offer" placeholder="Вставьте Offer от хоста здесь..." disabled></textarea>
             <button id="set-offer" disabled>Установить Offer и Создать Answer</button>
             <textarea id="answer" placeholder="Answer будет здесь..." readonly></textarea>
@@ -57,7 +52,11 @@
             <textarea id="remote-client-ice" placeholder="Вставьте ICE кандидаты от хоста здесь..." disabled></textarea>
             <button id="add-client-ice" disabled>Добавить ICE кандидата от хоста</button>
         </div>
+
+        <!-- Поле для игры -->
+        <canvas id="gameCanvas" class="hidden"></canvas>
+
     </div>
-    <script type="module" src="app.js"></script>
+    <script type="module" src="game.js"></script>
 </body>
 </html>
