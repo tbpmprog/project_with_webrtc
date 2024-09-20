@@ -1,7 +1,8 @@
 export let peerConnection;
 export let dataChannel;
 export let isHost = false;
-let onMessageReceived;
+let onMessageReceived = null;  // Инициализируем переменную
+let onDataChannelOpen = null;  // Добавляем переменную для обработчика открытия DataChannel
 let isDataChannelOpen = false;  // Флаг для отслеживания состояния DataChannel
 
 // Конфигурация STUN/TURN-серверов
@@ -17,6 +18,11 @@ export function setOnMessageReceived(callback) {
     onMessageReceived = callback;
 }
 
+// Функция для установки обработчика открытия DataChannel
+export function setOnDataChannelOpen(callback) {
+    onDataChannelOpen = callback;
+}
+
 // Инициализация WebRTC для хоста
 export async function createHostConnection() {
     peerConnection = new RTCPeerConnection(configuration);
@@ -26,15 +32,25 @@ export async function createHostConnection() {
     dataChannel.onopen = () => {
         isDataChannelOpen = true;
         console.log("DataChannel открыт для хоста");
+        if (onDataChannelOpen) {
+            onDataChannelOpen();  // Вызываем обработчик открытия DataChannel
+        }
     };
-    dataChannel.onmessage = (event) => onMessageReceived(event.data);
+
+    dataChannel.onmessage = (event) => {
+        if (onMessageReceived) {
+            onMessageReceived(event.data);  // Проверяем, что функция определена
+        } else {
+            console.warn("onMessageReceived не определен!");
+        }
+    };
 
     // Генерация ICE-кандидатов
     peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
             const iceCandidatesField = document.getElementById('host-ice');
             iceCandidatesField.value += JSON.stringify(event.candidate) + '\n';
-            document.getElementById('copy-host-ice').disabled = false;  // Разблокируем кнопку копирования ICE-кандидатов
+            document.getElementById('copy-host-ice').disabled = false;
         }
     };
 
@@ -58,16 +74,25 @@ export async function createGuestConnection(offer) {
         dataChannel.onopen = () => {
             isDataChannelOpen = true;
             console.log("DataChannel открыт для гостя");
+            if (onDataChannelOpen) {
+                onDataChannelOpen();  // Вызываем обработчик открытия DataChannel
+            }
         };
-        dataChannel.onmessage = (event) => onMessageReceived(event.data);
+
+        dataChannel.onmessage = (event) => {
+            if (onMessageReceived) {
+                onMessageReceived(event.data);  // Проверяем, что функция определена
+            } else {
+                console.warn("onMessageReceived не определен!");
+            }
+        };
     };
 
-    // Генерация ICE-кандидатов
     peerConnection.onicecandidate = (event) => {
         if (event.candidate) {
             const iceCandidatesField = document.getElementById('client-ice');
             iceCandidatesField.value += JSON.stringify(event.candidate) + '\n';
-            document.getElementById('copy-client-ice').disabled = false;  // Разблокируем кнопку копирования ICE-кандидатов
+            document.getElementById('copy-client-ice').disabled = false;
         }
     };
 
@@ -85,7 +110,6 @@ export async function createGuestConnection(offer) {
 // Установка Answer для хоста
 export async function setAnswerForHost(answer) {
     try {
-        console.log("Начало установки Answer на стороне хоста...");
         await peerConnection.setRemoteDescription(new RTCSessionDescription(answer));
         console.log("Answer успешно установлен на стороне хоста.");
     } catch (error) {
@@ -97,7 +121,6 @@ export async function setAnswerForHost(answer) {
 export async function addIceCandidate(candidateString) {
     try {
         const candidate = JSON.parse(candidateString);
-        console.log("Попытка добавить ICE кандидата:", candidate);
         await peerConnection.addIceCandidate(new RTCIceCandidate(candidate));
         console.log("ICE кандидат успешно добавлен:", candidate);
     } catch (error) {
@@ -108,7 +131,12 @@ export async function addIceCandidate(candidateString) {
 // Экспортируем функцию sendData
 export function sendData(data) {
     if (isDataChannelOpen && dataChannel && dataChannel.readyState === 'open') {
-        dataChannel.send(JSON.stringify(data));
+        if (data) {
+            console.log("Отправка данных через DataChannel:", data);
+            dataChannel.send(JSON.stringify(data));
+        } else {
+            console.warn("Попытка отправки пустых данных через DataChannel");
+        }
     } else {
         console.warn("DataChannel не готов к отправке данных");
     }

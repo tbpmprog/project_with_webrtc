@@ -33,7 +33,7 @@ export function copyToClipboard(button, fieldId) {
     });
 }
 
-// Автоматическое скрытие настроек
+// Автоматическое скрытие настроек после подключения
 export function autoHideSettings() {
     const settingsSection = document.getElementById('settings-section');
     const settingsToggle = document.getElementById('settings-toggle');
